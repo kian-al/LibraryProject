@@ -1,6 +1,7 @@
 package ir.library.libraryproject.Service.User;
 
 import ir.library.libraryproject.Model.User;
+import ir.library.libraryproject.dto.request.UserRequest;
 import ir.library.libraryproject.dto.response.UserResponse;
 import ir.library.libraryproject.execption.RuleException;
 import ir.library.libraryproject.repository.UserRepository;
@@ -18,16 +19,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse save(User user) {
+    public UserResponse save(UserRequest userRequest) {
         Optional<User> byUsername =
-                userRepository.findByUsername(user.getUsername());
+                userRepository.findByUsername(userRequest.getUsername());
         if (byUsername.isPresent()){
             throw new RuleException("username.is.exist");
         }
-        User saveUser= userRepository.save(user);
+
+        return createUserResponse(userRepository.save(createUser(userRequest)));
+    }
+    private UserResponse createUserResponse(User user){
         return UserResponse.builder()
-                .id(saveUser.getId())
-                .username(saveUser.getUsername())
+                .id(user.getId())
+                .username(user.getUsername())
+                .build();
+    }
+    private User createUser(UserRequest userRequest){
+        return User.builder()
+                .username(userRequest.getUsername())
+                .password(userRequest.getPassword())
                 .build();
     }
 }

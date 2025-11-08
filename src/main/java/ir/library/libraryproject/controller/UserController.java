@@ -2,7 +2,9 @@ package ir.library.libraryproject.controller;
 
 import ir.library.libraryproject.Model.User;
 import ir.library.libraryproject.Service.User.UserService;
+import ir.library.libraryproject.dto.request.UserRequest;
 import ir.library.libraryproject.dto.response.UserResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,8 +22,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserResponse> save(@RequestBody User user){
-        return ResponseEntity.ok(userService.save(user));
+    public ResponseEntity<UserResponse> save(@RequestBody @Valid UserRequest userRequest){
+        return ResponseEntity.ok(userService.save(userRequest));
 
     }
 }
