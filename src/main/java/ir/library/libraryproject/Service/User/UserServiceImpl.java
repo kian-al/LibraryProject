@@ -3,7 +3,7 @@ package ir.library.libraryproject.Service.User;
 import ir.library.libraryproject.Model.User;
 import ir.library.libraryproject.dto.request.UserRequest;
 import ir.library.libraryproject.dto.response.UserResponse;
-import ir.library.libraryproject.execption.RuleException;
+import ir.library.libraryproject.exception.RuleException;
 import ir.library.libraryproject.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
