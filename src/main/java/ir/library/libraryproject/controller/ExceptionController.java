@@ -2,6 +2,7 @@ package ir.library.libraryproject.controller;
 
 import ir.library.libraryproject.dto.response.ExceptionResponse;
 import ir.library.libraryproject.exception.RuleException;
+import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,6 +14,11 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class ExceptionController {
+    private final MessageSourceAccessor messageSourceAccessor;
+
+    public ExceptionController(MessageSourceAccessor messageSourceAccessor) {
+        this.messageSourceAccessor = messageSourceAccessor;
+    }
 
     @ExceptionHandler(RuleException.class)
     public ResponseEntity<List<ExceptionResponse>> HandlerRuleException(RuleException ruleException){
@@ -39,7 +45,7 @@ public class ExceptionController {
     }
     private ExceptionResponse ruleExceptionToExceptionResponse(RuleException ruleException){
         return ExceptionResponse.builder()
-                .message(ruleException.getMessage())
+                .message(messageSourceAccessor.getMessage(ruleException.getMessage()))
                 .code(ruleException.getMessage())
                 .build();
     }
