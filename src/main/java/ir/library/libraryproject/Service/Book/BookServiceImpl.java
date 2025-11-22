@@ -9,7 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService{
@@ -40,7 +42,20 @@ public class BookServiceImpl implements BookService{
                                 .id(book.getId())
                                 .name(book.getName())
                                 .price(book.getPrice())
-                                .build());
+                                .build()
+                );
+    }
+
+    @Override
+    public List<BookResponse> findByName(String name) {
+        return bookRepository.findByNameV2("%"+name+"%")
+                .stream().map((book) ->
+                        BookResponse.builder()
+                            .id(book.getId())
+                            .name(book.getName())
+                            .price(book.getPrice())
+                                .build())
+                .collect(Collectors.toList());
     }
 
 
