@@ -1,9 +1,11 @@
 package ir.library.libraryproject.Service.Book;
 
+import ir.library.libraryproject.Model.Book;
 import ir.library.libraryproject.dto.request.BookRequest;
 import ir.library.libraryproject.dto.response.BookResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -14,4 +16,6 @@ public interface BookService {
     Page<BookResponse> findAll(Pageable pageable);
 
     List<BookResponse> findByName(String name);
+
+    BookResponse findById(Long id);
 }
