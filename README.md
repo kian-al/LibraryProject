@@ -1,171 +1,78 @@
-# 📚 Library Project  
-A full-stack Book Store application built using **Spring Boot** for the backend and **React** for the frontend.  
-This repository follows a clean and scalable **monorepo architecture**.
+# Library Shop Project
 
----
+This project is a **full-stack book store application** built with:
 
-## 🚀 Features
-- 📖 Full CRUD operations for books  
-- 🔐 JWT-based authentication (optional for future expansion)  
-- 📦 RESTful API built with Spring Boot  
-- ⚛️ Modern UI built with React  
-- 🐳 Docker-ready structure  
-- 🧹 Clean, maintainable folder architecture
+* **Spring Boot** for the backend
+* **React** for the frontend
+* **Playwright** for end-to-end testing
+* **Docker** for containerization and deployment
 
----
+## Project Structure
 
-## 📁 Project Structure
-
+```
 LibraryProject/
 │
-├── backend/ # Spring Boot API
-│ ├── src/
-│ ├── pom.xml
-│ ├── Dockerfile
-│
-├── frontend/ # React application
-│ ├── src/
-│ ├── public/
-│ ├── package.json
-│ ├── Dockerfile
-│
-├── docker-compose.yml # Full project orchestration
-└── README.md
+├── backend/        # Spring Boot API
+├── frontend/       # React application
+└── tests/          # Playwright E2E tests
+```
 
-yaml
-Copy code
+## Backend (Spring Boot)
 
----
+The backend provides APIs for managing books, users, and orders. It follows a clean layered architecture:
 
-# 🛠 Backend (Spring Boot)
+* Controller
+* Service
+* Repository
+* DTOs
+* Exception Handling
 
-## 📌 Requirements  
-- Java 17+  
-- Maven 3+  
+## Frontend (React)
 
-## ▶️ Run the Backend
+The frontend is a simple and clean UI for:
 
-```bash
-cd backend
-mvn clean install
-mvn spring-boot:run
-This starts the API on:
+* Listing books
+* Viewing details
+* Adding books to cart
+* Managing user orders
 
-arduino
-Copy code
-http://localhost:8080
-🌐 API Base URL
-bash
-Copy code
-/api
-(Endpoints will be documented as backend development progresses.)
+It communicates with the backend using REST API.
 
-🎨 Frontend (React)
-📌 Requirements
-Node.js 18+
+## Testing (Playwright)
 
-npm or yarn
+Playwright will run end-to-end tests to ensure:
 
-▶️ Run the Frontend
-bash
-Copy code
-cd frontend
-npm install
-npm start
-This starts the frontend at:
+* UI loads correctly
+* API responses are handled properly
+* User flows (add to cart, checkout, etc.) work as expected
 
-arduino
-Copy code
-http://localhost:3000
-🔗 Backend Connection
-In development, React uses a proxy defined in package.json:
+A folder called `tests/` contains:
 
-json
-Copy code
-"proxy": "http://localhost:8080"
-This means you can call the backend like:
+* Test configuration
+* UI test cases
+* API integration checks
 
-js
-Copy code
-axios.get("/api/books");
-🐳 Docker Setup
-This project includes a docker-compose.yml file to run both frontend and backend together.
+## Docker Setup
 
-▶️ Run with Docker
-bash
-Copy code
-docker-compose up --build
-Services:
+The project will be containerized using Docker.
+Two images will be built:
 
-Backend → http://localhost:8080
+* **backend image** (Spring Boot JAR)
+* **frontend image** (React build served by Nginx or Node)
 
-Frontend → http://localhost:3000
+A `docker-compose.yml` will run everything together:
 
-📦 Dockerfile Structure
-Backend backend/Dockerfile
-dockerfile
-Copy code
-FROM eclipse-temurin:17-jdk-alpine
-WORKDIR /app
-COPY target/*.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
-Frontend frontend/Dockerfile
-dockerfile
-Copy code
-FROM node:18 as build
-WORKDIR /app
-COPY . .
-RUN npm install
-RUN npm run build
+* Backend on port 8080
+* Frontend on port 3000 or served as static build
 
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-🤝 Contribution Guidelines (Professional Standard)
-🔹 Branch Naming
-Use clear and consistent branch names:
+## Goal of the Project
 
-bash
-Copy code
-feature/add-book-crud
-feature/frontend-ui
-fix/cors-issue
-chore/docker-setup
-refactor/service-layer
-🔹 Commit Message Rules
-Follow professional conventions:
+The goal is to deliver a **complete senior-level full‑stack project** that includes:
 
-feat: → new feature
+* Clean codebase
+* Full CI/CD structure
+* Docker support
+* E2E tests with Playwright
+* Scalable folder structures
 
-fix: → bug fix
-
-refactor: → code restructuring
-
-chore: → maintenance
-
-docs: → documentation
-
-Examples:
-
-pgsql
-Copy code
-feat: add create book endpoint
-fix: resolve CORS config for frontend
-refactor: move backend project into /backend directory
-docs: add project-level README
-🏗 Future Roadmap
-Add authentication (JWT)
-
-Add pagination & filtering
-
-Add user roles (Admin / User)
-
-Add image upload for book covers
-
-Deploy using Docker on VPS
-
-CI/CD via GitHub Actions
-
-📜 License
-This project is created by https://github.com/kian-al.
+This project will represent a real online book shop with production‑ready structure, suitable for portfolio and real‑world usage.
