@@ -8,7 +8,9 @@ import ir.library.libraryproject.repository.BookRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -60,9 +62,14 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public BookResponse findById(Long id) {
-         Book book =bookRepository.findById(id)
-                .orElseThrow(()->new RuleException("book.not.found"));
-         return createBookResponse(book);
+         return createBookResponse(findByIdReturnBook(id));
+    }
+
+    @Override
+    @Transactional//This annotation: When you edit a book, it saves the edit in the database.
+    public void deleted(Long id) {
+        Book bookById=findByIdReturnBook(id);
+        bookRepository.delete(bookById);
     }
 
 
@@ -78,6 +85,11 @@ public class BookServiceImpl implements BookService{
                 .name(book.getName())
                 .price(book.getPrice())
                 .build();
+    }
+
+    private Book findByIdReturnBook(Long id){
+        return bookRepository.findById(id)
+                .orElseThrow(()->new RuleException("book.not.found"));
     }
 
 }

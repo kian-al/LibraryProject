@@ -18,4 +18,6 @@ public interface BookService {
     List<BookResponse> findByName(String name);
 
     BookResponse findById(Long id);
+
+    void deleted(Long id);
 }
