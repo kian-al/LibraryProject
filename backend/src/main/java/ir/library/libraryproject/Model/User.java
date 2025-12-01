@@ -1,5 +1,6 @@
 package ir.library.libraryproject.Model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -16,6 +17,9 @@ public class User extends BaseEntity{
     private String username;
 
     private String password;
+
+    @Column(columnDefinition = "boolean default true")
+    private Boolean enabled=true;
 
 
 }
